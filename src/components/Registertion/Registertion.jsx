@@ -127,7 +127,7 @@ const Registration = () => {
           </p>
           <div
             onClick={() => setPasswordN(!showPassword)}
-            className="absolute top-[20%] left-[60%]   cursor-pointer text-xl text-[#11175D]"
+            className="absolute top-[35px] left-[60%]   cursor-pointer text-xl text-[#11175D]"
           >
             {showPassword ? <PiEyeBold /> : <PiEyeClosedFill />}
           </div>

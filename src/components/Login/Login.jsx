@@ -49,13 +49,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-between overflow-hidden pt-[20px]">
+    <div className="flex justify-between overflow-hidden pt-[px]">
       <div className="w-1/2 overflow-hidden pl-[190px] mt-[100px]">
         <p className="font-nunito-font text-[35px] text-[#11175D] font-bold mb-2">
           Login to your account!
         </p>
 
-        <div className="mt-[29px] w-[220px] h-[62px] border-2 rounded-xl border-[#B8BACF] flex justify-center items-center">
+        <div className=" cursor-pointer mt-[29px] w-[220px] h-[62px] border-2 rounded-xl border-[#B8BACF] flex justify-center items-center">
         <FcGoogle className="text-2xl"/>
           <p className="pl-2">Login with Google</p>
         </div>
