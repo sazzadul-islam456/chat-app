@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import image from "../../assets/login.jpg";
-import google from "../../assets/google.png";
-import { PiEyeBold } from "react-icons/pi";
-import { PiEyeClosedFill } from "react-icons/pi";
+import { PiEyeBold, PiEyeClosedFill } from "react-icons/pi";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
@@ -14,34 +12,34 @@ const Login = () => {
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    setEmailErr(""); // Clear the error on input change
+    if (emailErr) setEmailErr("");
   };
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    setPasswordErr(""); // Clear the error on input change
+    if (passwordErr) setPasswordErr("");
   };
 
   const handleSubmit = () => {
     let emailError = "";
     let passwordError = "";
 
+    // Validate Email
     if (!email) {
       emailError = "Please enter your email.";
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       emailError = "Please enter a valid email address.";
     }
 
+    // Validate Password
     if (!password) {
       passwordError = "Please enter your password.";
     } else {
-      const errors = [];
-      if (!/[A-Z]/.test(password)) errors.push("Use at least one uppercase letter.");
-      if (!/[a-z]/.test(password)) errors.push("Use at least one lowercase letter.");
-      if (!/\d/.test(password)) errors.push("Use at least one number.");
-      if (!/[@$!%*?&]/.test(password)) errors.push("Use at least one special character.");
-      if (password.length < 8) errors.push("Password must be at least 8 characters long.");
-      passwordError = errors.join(" ");
+      if (!/[A-Z]/.test(password)) passwordError = "Use at least one uppercase letter.";
+      else if (!/[a-z]/.test(password)) passwordError = "Use at least one lowercase letter.";
+      else if (!/\d/.test(password)) passwordError = "Use at least one number.";
+      else if (!/[@$!%*?&]/.test(password)) passwordError = "Use at least one special character.";
+      else if (password.length < 8) passwordError = "Password must be at least 8 characters long.";
     }
 
     setEmailErr(emailError);
@@ -49,73 +47,68 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-between overflow-hidden pt-[px]">
-      <div className="w-1/2 overflow-hidden pl-[190px] mt-[100px]">
-        <p className="font-nunito-font text-[35px] text-[#11175D] font-bold mb-2">
-          Login to your account!
-        </p>
+    <div className="flex justify-between overflow-hidden pt-10">
+      {/* Left Section */}
+      <div className="w-1/2 pl-[190px] mt-[100px]">
+        <p className="text-[35px] text-[#11175D] font-bold mb-4">Login to your account!</p>
 
-        <div className=" cursor-pointer mt-[29px] w-[220px] h-[62px] border-2 rounded-xl border-[#B8BACF] flex justify-center items-center">
-        <FcGoogle className="text-2xl"/>
+        {/* Google Login Button */}
+        <div className="cursor-pointer mt-[29px] w-[220px] h-[62px] border-2 rounded-xl flex items-center justify-center border-[#B8BACF] hover:shadow-md">
+          <FcGoogle className="text-2xl" />
           <p className="pl-2">Login with Google</p>
         </div>
 
+        {/* Email Input */}
         <div className="relative mt-[32px]">
           <input
             value={email}
             onChange={handleEmail}
             type="email"
             placeholder="Enter your email"
-            className="w-[368px] border-2 border-[#B8BACF] py-[26px] pl-[52px] rounded-[8px]"
+            aria-label="Email address"
+            className="w-[368px] border-2 border-[#B8BACF] py-3 px-4 rounded-lg"
           />
-          <p className="absolute tracking-[2px] bg-white top-[-10px] left-[34px] px-[18px] font-nunito-font text-[13px] text-[#11175D] font-semibold">
-            Email address
-          </p>
-          {emailErr && (
-            <p className="bg-[#EA6C00] rounded-lg text-center w-[300px] mt-1">
-              {emailErr}
-            </p>
-          )}
+          {emailErr && <p className="text-red-600 text-sm mt-2">{emailErr}</p>}
         </div>
 
+        {/* Password Input */}
         <div className="relative mt-[60px]">
           <input
-            onChange={handlePassword}
             value={password}
+            onChange={handlePassword}
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
-            className="w-[368px] border-2 border-[#B8BACF] py-[26px] pl-[52px] pr-[50px] rounded-[8px]"
+            aria-label="Password"
+            className="w-[368px] border-2 border-[#B8BACF] py-3 px-4 rounded-lg"
           />
-          <p className="absolute tracking-[2px] bg-white top-[-10px] left-[34px] px-[18px] font-nunito-font text-[13px] text-[#11175D] font-semibold">
-            Password
-          </p>
           <div
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-[30%] left-[60%] transform cursor-pointer text-xl text-[#11175D]"
+            aria-label="Toggle Password Visibility"
+            role="button"
+            aria-pressed={showPassword}
+            className="absolute top-[12px] right-[16px] text-xl cursor-pointer text-[#11175D]"
           >
             {showPassword ? <PiEyeBold /> : <PiEyeClosedFill />}
           </div>
-          {passwordErr && (
-            <p className="bg-[#EA6C00] rounded-lg text-center w-[500px] mt-2 text-sm">
-              {passwordErr}
-            </p>
-          )}
+          {passwordErr && <p className="text-red-600 text-sm mt-2">{passwordErr}</p>}
         </div>
 
+        {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          className="text-[20px] font-nunito-font font-semibold bg-primary mt-[55px] text-white w-[368px] py-[20px] text-center rounded-[8px]"
+          className="bg-blue-600 text-white w-[368px] py-3 mt-[35px] rounded-lg hover:bg-blue-700"
         >
           Login to Continue
         </button>
-        <p className="mt-[35px] w-[368px] font-sans text-[13px] font-bold">
+
+        {/* Sign-Up Link */}
+        <p className="mt-[20px] text-sm">
           Don’t have an account?{" "}
-          <span className="text-[#EA6C00] font-sans text-[13px] font-bold">
-            Sign up
-          </span>
+          <span className="text-blue-600 cursor-pointer">Sign up</span>
         </p>
       </div>
 
+      {/* Right Section */}
       <div className="w-1/2">
         <img src={image} alt="Login" className="w-full h-screen object-cover" />
       </div>

@@ -1,15 +1,21 @@
 import React from 'react'
-import Registertion from './components/Registertion/Registertion'
-import Login from './components/Login/Login'
+
+
 import { Route, Routes } from 'react-router-dom'
+import Registration from './components/Registertion/Registertion';
+import Login from './components/Login/Login';
+import Home from './components/pages/Home/Home';
+
+
+
 
 
 const App = () => {
   return (
     <Routes>
-      <Route path='/' element={<Registertion />} />
+      <Route path='/' element={<Registration />} />
       <Route path='/login' element={<Login />} />
-      
+      <Route path='/home' element={<Home />} />
     </Routes>
   )
 }
