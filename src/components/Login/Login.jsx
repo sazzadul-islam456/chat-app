@@ -73,25 +73,26 @@ const Login = () => {
 
         {/* Password Input */}
         <div className="relative mt-[60px]">
-          <input
-            value={password}
-            onChange={handlePassword}
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
-            aria-label="Password"
-            className="w-[368px] border-2 border-[#B8BACF] py-3 px-4 rounded-lg"
-          />
-          <div
-            onClick={() => setShowPassword(!showPassword)}
-            aria-label="Toggle Password Visibility"
-            role="button"
-            aria-pressed={showPassword}
-            className="absolute top-[12px] right-[16px] text-xl cursor-pointer text-[#11175D]"
-          >
-            {showPassword ? <PiEyeBold /> : <PiEyeClosedFill />}
-          </div>
-          {passwordErr && <p className="text-red-600 text-sm mt-2">{passwordErr}</p>}
-        </div>
+  <input
+    value={password}
+    onChange={handlePassword}
+    type={showPassword ? "text" : "password"}
+    placeholder="Enter your password"
+    aria-label="Password"
+    className="w-[368px] border-2 border-[#B8BACF] py-3 px-4 pr-12 rounded-lg"
+  />
+  <div
+    onClick={() => setShowPassword(!showPassword)}
+    aria-label="Toggle Password Visibility"
+    role="button"
+    aria-pressed={showPassword}
+    className="absolute top-1/2 right-[200px] -translate-y-1/2  transform  text-xl cursor-pointer text-[#11175D]"
+  >
+    {showPassword ? <PiEyeBold /> : <PiEyeClosedFill />}
+  </div>
+  {passwordErr && <p className="text-red-600 text-sm mt-2">{passwordErr}</p>}
+</div>
+
 
         {/* Submit Button */}
         <button

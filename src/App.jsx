@@ -1,6 +1,5 @@
 import React from 'react'
-
-
+import firebaseConfig from './components/Authentication/firebase.config';
 import { Route, Routes } from 'react-router-dom'
 import Registration from './components/Registertion/Registertion';
 import Login from './components/Login/Login';

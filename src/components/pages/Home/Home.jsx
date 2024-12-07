@@ -275,7 +275,7 @@ const Home = () => {
                     Today, 2:31pm
                   </p>
                 </div>
-                <div className="pl-[90px]">
+                <div className="pl-[95px]">
                   <FaPlus className="w-[30px] h-[30px] bg-[#5F35F5] text-white rounded-[5px] " />
                 </div>
               </div>
@@ -291,7 +291,7 @@ const Home = () => {
                     Today, 2:31pm
                   </p>
                 </div>
-                <div className="pl-[90px]">
+                <div className="pl-[95px]">
                   <FaPlus className="w-[30px] h-[30px] bg-[#5F35F5] text-white rounded-[5px] " />
                 </div>
               </div>
@@ -299,7 +299,7 @@ const Home = () => {
 
               <div className="pt-[17px] flex  items-center">
                 <img src={Tejeshwini} alt="" />
-                <div className="pl-[5px]">
+                <div className="ml-[5px]">
                   <p className=" font-poppins-font font-semibold text-[18px] text-[#000000]">
                     Tejeshwini
                   </p>
@@ -307,7 +307,7 @@ const Home = () => {
                     Today, 12:22pm
                   </p>
                 </div>
-                <div className="pl-[90px]">
+                <div className="ml-[87px]">
                   <FaPlus className="w-[30px] h-[30px] bg-[#5F35F5] text-white rounded-[5px] " />
                 </div>
               </div>

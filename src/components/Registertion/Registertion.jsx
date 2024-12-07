@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import image from "../../assets/rimage.png";
 import { PiEyeBold } from "react-icons/pi";
 import { PiEyeClosedFill } from "react-icons/pi";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Registration = () => {
+  const auth = getAuth();
+
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +14,7 @@ const Registration = () => {
   const [emailErr, setEmailErr] = useState("");
   const [fullNameErr, setFullNameErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // Success message state
 
   const [showPassword, setPasswordN] = useState(false);
 
@@ -33,19 +37,19 @@ const Registration = () => {
     let emailError = "";
     let fullNameError = "";
     let passwordError = "";
-
+  
     // Email Validation
     if (!email) {
       emailError = "Please enter your email.";
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       emailError = "Please enter a valid email address.";
     }
-
+  
     // Full Name Validation
     if (!fullName) {
       fullNameError = "Please provide your full name.";
     }
-
+  
     // Password Validation
     if (!password) {
       passwordError = "Please enter your password.";
@@ -58,14 +62,29 @@ const Registration = () => {
       if (password.length < 8) errors.push("Password must be at least 8 characters long.");
       passwordError = errors.join(" ");
     }
-
+  
     // Set Errors to State
     setEmailErr(emailError);
     setFullNameErr(fullNameError);
     setPasswordErr(passwordError);
-
+  
+    // Proceed with Registration if No Errors
+    if (!emailError && !fullNameError && !passwordError) {
+      createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("regestation successfull");
+        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
     
-    
+      
+      
+      // console.log("Registration Successful!");
+    }
   };
 
   return (
@@ -127,7 +146,7 @@ const Registration = () => {
           </p>
           <div
             onClick={() => setPasswordN(!showPassword)}
-            className="absolute top-[35px] left-[60%]   cursor-pointer text-xl text-[#11175D]"
+            className="absolute top-[30px] right-[230px]   cursor-pointer text-xl text-[#11175D]"
           >
             {showPassword ? <PiEyeBold /> : <PiEyeClosedFill />}
           </div>
@@ -147,8 +166,8 @@ const Registration = () => {
         </p>
         <p className="mt-[5px] w-[368px] text-center font-sans text-[13px] font-bold">
           Already have an account?
-          <span className="text-[#EA6C00] font-sans text-[13px] font-bold">
-            Log In
+          <span className="text-[#EA6C00] font-sans text-[15px] font-bold pl-[5px] ">
+             Log In
           </span>
         </p>
       </div>
