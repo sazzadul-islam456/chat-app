@@ -2,10 +2,24 @@ import React, { useState } from "react";
 import image from "../../assets/rimage.png";
 import { PiEyeBold } from "react-icons/pi";
 import { PiEyeClosedFill } from "react-icons/pi";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+import { DNA } from "react-loader-spinner";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+
+import { BiLogoHeroku } from "react-icons/bi";
+
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const auth = getAuth();
+  const navigate = useNavigate("");
 
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -17,6 +31,10 @@ const Registration = () => {
   const [successMessage, setSuccessMessage] = useState(""); // Success message state
 
   const [showPassword, setPasswordN] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  const [success, setSuccess] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -55,11 +73,15 @@ const Registration = () => {
       passwordError = "Please enter your password.";
     } else {
       const errors = [];
-      if (!/[A-Z]/.test(password)) errors.push("Use at least one uppercase letter.");
-      if (!/[a-z]/.test(password)) errors.push("Use at least one lowercase letter.");
+      if (!/[A-Z]/.test(password))
+        errors.push("Use at least one uppercase letter.");
+      if (!/[a-z]/.test(password))
+        errors.push("Use at least one lowercase letter.");
       if (!/\d/.test(password)) errors.push("Use at least one number.");
-      if (!/[@$!%*?&]/.test(password)) errors.push("Use at least one special character.");
-      if (password.length < 8) errors.push("Password must be at least 8 characters long.");
+      if (!/[@$!%*?&]/.test(password))
+        errors.push("Use at least one special character.");
+      if (password.length < 8)
+        errors.push("Password must be at least 8 characters long.");
       passwordError = errors.join(" ");
     }
   
@@ -68,27 +90,52 @@ const Registration = () => {
     setFullNameErr(fullNameError);
     setPasswordErr(passwordError);
   
-    // Proceed with Registration if No Errors
     if (!emailError && !fullNameError && !passwordError) {
       createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("regestation successfull");
-        
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
-    
-      
-      
-      // console.log("Registration Successful!");
+        .then((userCredential) => {
+          const user = userCredential.user; // Extract the user object
+          sendEmailVerification(user) // Pass the user object here
+            .then(() => {
+              setLoading(true);
+              toast.success("Registration Successfully Done. Please verify your email.");
+              setEmail("");
+              setFullName("");
+              setPassword("");
+              setTimeout(() => {
+                navigate("/login");
+              }, 4000);
+            })
+            .catch((error) => {
+              console.error("Error sending email verification:", error);
+              toast.error("Failed to send email verification. Please try again.");
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          if (errorCode.includes("auth/email-already-in-use")) {
+            setEmailErr("This email is already used");
+          }
+          // ..
+        });
     }
   };
+  
 
   return (
     <div className="flex h-screen  overflow-hidden ">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition:Zoom
+      />
       {/* Left Section */}
       <div className="w-1/2 mt-[90px] pl-[190px]">
         <p className="font-nunito-font text-[35px] text-[#11175D] font-bold mb-2">
@@ -97,6 +144,11 @@ const Registration = () => {
         <p className="font-poppins-font font-medium text-black mb-6">
           Free register and you can enjoy it
         </p>
+        {successMessage && (
+          <p className="bg-green-500 text-white p-4 w-[368px]">
+            {successMessage}
+          </p>
+        )}
 
         {/* Email Address */}
         <div className="relative">
@@ -114,7 +166,6 @@ const Registration = () => {
             {emailErr}
           </p>
         </div>
-
         {/* Full Name */}
         <div className="relative my-[26px]">
           <input
@@ -156,18 +207,34 @@ const Registration = () => {
             </p>
           )}
         </div>
+        <div className="w-[368px]">
+  {loading ? (
+    <DNA
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="dna-loading"
+      wrapperStyle={{
+        marginLeft: "145px",
+      }}
+      wrapperClass="dna-wrapper"
+    />
+  ) : (
+    <button
+      onClick={handleSubmit} // Fix: Add the onClick handler
+      className="text-[20px] cursor-pointer font-nunito-font font-semibold bg-primary mt-[20px] text-white w-[368px] py-[20px] text-center rounded-[86px]"
+    >
+      Sign Up
+    </button>
+  )}
+</div>
 
         {/* Submit Button */}
-        <p
-          onClick={handleSubmit}
-          className="text-[20px] cursor-pointer font-nunito-font font-semibold bg-primary mt-[20px] text-white w-[368px] py-[20px] text-center rounded-[86px]"
-        >
-          Sign Up
-        </p>
+
         <p className="mt-[5px] w-[368px] text-center font-sans text-[13px] font-bold">
           Already have an account?
-          <span className="text-[#EA6C00] font-sans text-[15px] font-bold pl-[5px] ">
-             Log In
+          <span className="text-[#EA6C00] font-sans text-[15px] font-bold pl-[5px] cursor-pointer">
+           <Link to="/login">Log In</Link>
           </span>
         </p>
       </div>
