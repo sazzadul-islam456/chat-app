@@ -11,9 +11,12 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { userLoginInfo } from "../../Slices/userSlice";
 
 const Login = () => {
   const auth = getAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
 
@@ -37,6 +40,7 @@ const Login = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const user = result.user;
+        dispatch(userLoginInfo(user.user));
         toast.success(`Welcome, ${user.displayName}!`);
         setTimeout(() => {
           navigate("/Home");
@@ -67,7 +71,8 @@ const Login = () => {
 
     if (!emailError && !passwordError) {
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
+        .then((user) => {
+          console.log(user.user);
           console.log("Login successful!");
           toast.success("Login successful!");
           setTimeout(() => {
