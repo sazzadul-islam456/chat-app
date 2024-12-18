@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import profile from "../../../assets/ppimage.png";
 import { IoHomeOutline } from "react-icons/io5";
 import { PiChatCircleTextFill } from "react-icons/pi";
@@ -18,17 +18,24 @@ import Kiran from "../../../assets/Kiran.png";
 import Tejeshwini from "../../../assets/Tejeshwini.png";
 import Marvin from "../../../assets/Marvin.png";
 
+
+
 const Home = () => {
+
+  
   return (
     <div className="overflow-hidden">
       
-
-      <div className="">
+ 
+      
+    
+    <div className="">
       <div className="px-[15px] py-[35px] w-full flex">
         {/* Sidebar */}
         <div className="w-[186px] h-[954px] bg-[#5F35F5] rounded-[20px] flex-shrink-0">
-          <div className="pl-[42px] pt-[38px]">
+          <div className="pl-[42px] pt-[38px] relative">
             <img src={profile} alt="" />
+            <div className="w-[100px] h-[100px] bg-red-400 absolute"></div>
             <div className="pl-[25px] pt-[78px]">
               <IoHomeOutline
                 className="text-black text-[60px] transition-all duration-300 ease-in-out 
@@ -75,10 +82,10 @@ const Home = () => {
 
 
           {/* Group List 1 */}
-          <div className=" pl-[22px]">
+          <div className=" pl-[22px] ">
             {/* search button start */}
-            <div className="pb-[43px]">
-              <div className="w-[427px] h-[69px]  bg-teal-500 rounded-[20px] flex justify-between items-center  ">
+            <div className="pb-[43px] ">
+              <div className="w-[427px] h-[69px]  rounded-[20px] flex justify-between items-center shadow-xl overflow-visible   ">
                 <div className=" flex pl-[20px] items-center">
                   <IoSearch className="text-[30px]" />
                   <p className="pl-[10px] font-poppins-font font-medium text-[16px] text-[#3D3D3D]">
@@ -89,7 +96,7 @@ const Home = () => {
               </div>
             </div>
             {/* search button end*/}
-            <div className="w-[427px] h-[347px] bg-red-400 rounded-[20px] py-[13px] px-[20px] ">
+            <div className="w-[427px] h-[347px]  rounded-[20px] py-[13px] px-[20px]  shadow-2xl overflow-visible  ">
               <div className="flex justify-between">
                 <p className="font-poppins-font font-semibold text-[20px]">
                   Group List
@@ -147,8 +154,8 @@ const Home = () => {
           </div>
 
           {/* Group List 2 */}
-          <div className="pl-[22px]">
-            <div className="w-[344px] h-[465px] bg-red-400 rounded-[20px] py-[13px] px-[20px] ">
+          <div className="pl-[22px] ">
+            <div className="w-[344px] h-[465px] rounded-[20px] py-[13px] px-[20px] shadow-xl overflow-visible ">
               <div className="flex justify-between">
                 <p className="font-poppins-font font-semibold text-[20px]">
                   Friends
@@ -242,7 +249,7 @@ const Home = () => {
 
           {/* Group List 3 */}
           <div className="pl-[22px]">
-            <div className="w-[344px] h-[465px] bg-red-400 rounded-[20px] py-[13px] px-[20px] ">
+            <div className="w-[344px] h-[465px] rounded-[20px] py-[13px] px-[20px] shadow-xl overflow-visible ">
               <div className="flex justify-between">
                 <p className="font-poppins-font font-semibold text-[20px]">
                   User List
@@ -336,7 +343,7 @@ const Home = () => {
         <div className=" flex">
         <div className=" pl-[60px] pt-[42px]">
            
-           <div className="w-[427px] h-[462px] bg-red-400 rounded-[20px] py-[13px] px-[20px] ">
+           <div className="w-[427px] h-[462px] rounded-[20px] py-[13px] px-[20px] shadow-xl overflow-visible ">
              <div className="flex justify-between">
                <p className="font-poppins-font font-semibold text-[20px]">
                Friend  Request
@@ -435,7 +442,7 @@ const Home = () => {
          </div>
          {/* Group List 5 */}
          <div className="pl-[22px] pt-[42px]">
-            <div className="w-[344px] h-[465px] bg-red-400 rounded-[20px] py-[13px] px-[20px] ">
+            <div className="w-[344px] h-[465px] rounded-[20px] py-[13px] px-[20px] shadow-xl overflow-visible ">
               <div className="flex justify-between">
                 <p className="font-poppins-font font-semibold text-[20px]">
                 My Groups
@@ -530,7 +537,7 @@ const Home = () => {
 
           <div className=" pl-[22px] pt-[42px]">
            
-           <div className="w-[350px] h-[465px] bg-red-400 rounded-[20px] py-[13px] px-[20px] ">
+           <div className="w-[350px] h-[465px]  rounded-[20px] py-[13px] px-[20px]  shadow-xl overflow-visible ">
              <div className="flex justify-between">
                <p className="font-poppins-font font-semibold text-[20px]">
                Friend  Request
@@ -659,6 +666,10 @@ const Home = () => {
      
       
       </div>
+    
+  
+   
+
     </div>
   );
 };

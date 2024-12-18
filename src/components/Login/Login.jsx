@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  sendEmailVerification, // Import sendEmailVerification
 } from "firebase/auth";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -39,8 +40,8 @@ const Login = () => {
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const user = result.user;
-        dispatch(userLoginInfo(user.user));
+        const user = result.user; // `result.user` contains the user information
+        dispatch(userLoginInfo(user)); // Fixed: Pass `user` directly
         toast.success(`Welcome, ${user.displayName}!`);
         setTimeout(() => {
           navigate("/Home");
@@ -55,6 +56,8 @@ const Login = () => {
   const handleSubmit = () => {
     let emailError = "";
     let passwordError = "";
+    setEmail("");
+    setPassword("");
 
     if (!email) {
       emailError = "Please enter your email.";
@@ -71,13 +74,27 @@ const Login = () => {
 
     if (!emailError && !passwordError) {
       signInWithEmailAndPassword(auth, email, password)
-        .then((user) => {
-          console.log(user.user);
-          console.log("Login successful!");
-          toast.success("Login successful!");
-          setTimeout(() => {
-            navigate("/Home");
-          }, 1000);
+        .then((userCredential) => {
+          const user = userCredential.user;
+          dispatch(userLoginInfo(user));
+          localStorage.setItem("userLoginInfo", JSON.stringify(user));
+
+          if (!user.emailVerified) {
+            // Send verification email if not verified
+            sendEmailVerification(user)
+              .then(() => {
+                toast.error("Please verify your email. A verification email has been sent.");
+              })
+              .catch((error) => {
+                console.error("Error sending verification email:", error);
+                toast.error("Failed to send verification email.");
+              });
+          } else {
+            toast.success("Login successful!");
+            setTimeout(() => {
+              navigate("/Home");
+            }, 1000);
+          }
         })
         .catch((error) => {
           console.error("Login error: ", error);
