@@ -5,14 +5,16 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBTdVCElr9vU8-Eh6WZBwMphoUmjWOLUGU",
-  authDomain: "chattinfapp-app-2.firebaseapp.com",
-  projectId: "chattinfapp-app-2",
-  storageBucket: "chattinfapp-app-2.firebasestorage.app",
-  messagingSenderId: "454322707437",
-  appId: "1:454322707437:web:87e6414f43b0e1465aa5e4"
+  apiKey: "AIzaSyCniGhcnOHcQ3dL-Dm-90akH2_vk5OxYrs",
+  authDomain: "chatt-app-3-ecfc8.firebaseapp.com",
+  databaseURL: "https://chatt-app-3-ecfc8-default-rtdb.firebaseio.com",
+  projectId: "chatt-app-3-ecfc8",
+  storageBucket: "chatt-app-3-ecfc8.firebasestorage.app",
+  messagingSenderId: "745324882079",
+  appId: "1:745324882079:web:b5b2e6e89e9f49790c5aaa"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export default firebaseConfig;
+
+export default firebaseConfig

@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import man1 from "../../../assets/raghev.png";
 import man2 from "../../../assets/swathi.png";
 import man3 from "../../../assets/Kiran.png";
 import man4 from "../../../assets/Tejeshwini.png";
 import { FaPlus } from "react-icons/fa";
+import { getDatabase, onValue, ref } from "firebase/database";
 
 const UserList = () => {
+  const db = getDatabase();
+
+  useEffect(()=>{
+    const userRef = ref(db, "users/");
+onValue(userRef, (snapshot) => {
+  console.log(snapshot, "snapshot");
+});
+  },[])
+
+  
+
   return (
     <div>
       <div className="bg-slate-200 w-[427px] h-[420px] ml-[15px] mt-[10px] rounded-xl">
