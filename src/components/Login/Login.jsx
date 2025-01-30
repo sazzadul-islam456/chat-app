@@ -9,7 +9,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  sendEmailVerification, // Import sendEmailVerification
+  sendEmailVerification, 
 } from "firebase/auth";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -40,8 +40,8 @@ const Login = () => {
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const user = result.user; // `result.user` contains the user information
-        dispatch(userLoginInfo(user)); // Fixed: Pass `user` directly
+        const user = result.user; 
+        dispatch(userLoginInfo(user)); 
         toast.success(`Welcome, ${user.displayName}!`);
         setTimeout(() => {
           navigate("/Home");
@@ -80,7 +80,7 @@ const Login = () => {
           localStorage.setItem("userLoginInfo", JSON.stringify(user));
 
           if (!user.emailVerified) {
-            // Send verification email if not verified
+            
             sendEmailVerification(user)
               .then(() => {
                 toast.error("Please verify your email. A verification email has been sent.");

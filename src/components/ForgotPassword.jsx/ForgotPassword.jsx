@@ -11,17 +11,17 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState("");
 
-  // Handle email input change
+  
   const handleEmail = (e) => {
     setEmail(e.target.value);
     if (emailErr) setEmailErr("");
   };
 
-  // Handle form submission
+  
   const handleSubmit = () => {
     let emailError = "";
 
-    // Validate Email
+    
     if (!email) {
       emailError = "Please enter your email.";
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
 
     setEmailErr(emailError);
 
-    // If no errors, send password reset email
+  
     if (!emailError) {
       sendPasswordResetEmail(auth, email)
         .then(() => {
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
     }
   };
 
-  // Navigate back to login
+  
   const handleBackToLogin = () => {
     navigate("/login");
   };
